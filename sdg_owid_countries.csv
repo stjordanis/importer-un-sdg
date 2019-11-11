@@ -1,0 +1,310 @@
+id,name,owid_country_or_entity_id
+1,World,355
+8,Albania,16
+12,Algeria,17
+24,Angola,19
+31,Azerbaijan,25
+32,Argentina,21
+36,Australia,23
+40,Austria,24
+50,Bangladesh,28
+51,Armenia,22
+56,Belgium,4
+64,Bhutan,33
+68,Bolivia,34
+70,Bosnia and Herzegovina,35
+72,Botswana,36
+76,Brazil,37
+90,Solomon Islands,195
+100,Bulgaria,39
+104,Myanmar,142
+108,Burundi,41
+112,Belarus,30
+120,Cameroon,43
+124,Canada,44
+132,Cape Verde,45
+140,Central African Republic,174
+144,Sri Lanka,141
+148,Chad,173
+152,Chile,172
+156,China,171
+170,Colombia,170
+174,Comoros,169
+178,Congo,168
+180,Democratic Republic of Congo,167
+188,Costa Rica,166
+191,Croatia,165
+196,Cyprus,163
+203,Czech Republic,162
+204,Benin,32
+208,Denmark,161
+214,Dominican Republic,160
+218,Ecuador,201
+222,El Salvador,259
+231,Ethiopia,158
+233,Estonia,156
+242,Fiji,202
+246,Finland,155
+250,France,3
+262,Djibouti,154
+266,Gabon,153
+268,Georgia,152
+270,Gambia,151
+275,Palestine,731
+276,Germany,6
+288,Ghana,150
+296,Kiribati,204
+300,Greece,149
+320,Guatemala,148
+324,Guinea,147
+332,Haiti,145
+340,Honduras,139
+348,Hungary,138
+352,Iceland,207
+356,India,137
+360,Indonesia,136
+364,Iran,135
+368,Iraq,134
+372,Ireland,2
+376,Israel,133
+380,Italy,8
+384,Cote d'Ivoire,143
+388,Jamaica,132
+392,Japan,14
+398,Kazakhstan,131
+400,Jordan,130
+404,Kenya,129
+410,South Korea,127
+412,Kosovo,379
+417,Kyrgyzstan,126
+418,Laos,125
+422,Lebanon,124
+426,Lesotho,123
+428,Latvia,122
+430,Liberia,121
+440,Lithuania,119
+442,Luxembourg,210
+450,Madagascar,118
+454,Malawi,117
+458,Malaysia,116
+462,Maldives,211
+466,Mali,115
+470,Malta,212
+478,Mauritania,114
+480,Mauritius,213
+484,Mexico,113
+496,Mongolia,112
+498,Moldova,111
+499,Montenegro,215
+504,Morocco,110
+508,Mozambique,109
+516,Namibia,108
+524,Nepal,107
+528,Netherlands,5
+548,Vanuatu,221
+558,Nicaragua,105
+562,Niger,104
+566,Nigeria,103
+578,Norway,102
+583,Micronesia (country),222
+586,Pakistan,101
+591,Panama,100
+598,Papua New Guinea,99
+600,Paraguay,98
+604,Peru,97
+620,Portugal,95
+624,Guinea-Bissau,94
+626,Timor,225
+642,Romania,92
+643,Russia,12
+646,Rwanda,91
+678,Sao Tome and Principe,232
+686,Senegal,89
+690,Seychelles,233
+694,Sierra Leone,87
+703,Slovakia,85
+704,Vietnam,84
+705,Slovenia,83
+710,South Africa,81
+716,Zimbabwe,80
+724,Spain,9
+728,South Sudan,258
+729,Sudan,79
+748,Swaziland,78
+752,Sweden,10
+756,Switzerland,7
+760,Syria,77
+762,Tajikistan,76
+764,Thailand,75
+768,Togo,74
+776,Tonga,235
+788,Tunisia,71
+792,Turkey,70
+798,Tuvalu,237
+800,Uganda,68
+804,Ukraine,67
+807,Macedonia,66
+818,Egypt,65
+826,United Kingdom,1
+834,Tanzania,64
+840,United States,13
+854,Burkina Faso,40
+858,Uruguay,63
+860,Uzbekistan,62
+862,Venezuela,238
+882,Samoa,239
+887,Yemen,61
+894,Zambia,60
+9,Oceania,277
+15,Northern Africa,464
+30,Eastern Asia,467
+34,Southern Asia,470
+35,South Eastern Asia,36360
+62,Central and Southern Asia,36460
+116,Cambodia,42
+143,"Asia, Central",431
+145,Western Asia,472
+199,Least Developed Countries (LDCs),38228
+202,Sub-Saharan Africa,289
+419,Latin America and the Caribbean,343
+432,Landlocked developing countries,5404
+543,Oceania (excluding Australia and New Zealand),36415
+608,Philippines,96
+688,Serbia,88
+722,Small Island Developing States (SIDS),38229
+747,Northern Africa and Western Asia,36463
+753,Eastern and South-Eastern Asia,36461
+4,Afghanistan,15
+226,Equatorial Guinea,159
+585,Palau,224
+616,Poland,11
+5,South America,295
+11,Western Africa,466
+13,Central America,477
+14,Eastern Africa,462
+17,Middle Africa,463
+18,Southern Africa,465
+21,Northern America,450
+29,Caribbean,436
+39,Southern Europe,475
+53,Australia and New Zealand,36416
+54,Melanesia,478
+61,French Polynesia,203
+142,Asia,275
+150,Europe,276
+151,Eastern Europe,473
+154,Northern Europe,474
+155,"Europe, Western",439
+513,Europe and Northern America,36458
+554,New Zealand,106
+28,Antigua and Barbuda,20
+60,Bermuda,194
+634,Qatar,226
+660,Anguilla,228
+84,Belize,31
+438,Liechtenstein,209
+533,Aruba,219
+44,Bahamas,26
+48,Bahrain,27
+52,Barbados,29
+96,Brunei,38
+212,Dominica,200
+308,Grenada,206
+328,Guyana,146
+344,Hong Kong,144
+414,Kuwait,208
+434,Libya,120
+446,Macao,262
+512,Oman,217
+520,Nauru,218
+584,Marshall Islands,223
+659,Saint Kitts and Nevis,227
+662,Saint Lucia,229
+670,Saint Vincent and the Grenadines,230
+780,Trinidad and Tobago,73
+20,Andorra,18
+158,Other non-specified areas,631
+540,New Caledonia,220
+833,Isle of Man,265
+92,British Virgin Islands,196
+192,Cuba,164
+570,Niue,261
+784,United Arab Emirates,72
+706,Somalia,82
+16,American Samoa,246
+184,Cook Islands,199
+258,French Polynesia,203
+316,Guam,254
+580,Northern Mariana Islands,266
+772,Tokelau,287
+876,Wallis and Futuna,255
+2,Africa,273
+19,Americas,290
+57,Micronesia,35355
+86,British Indian Ocean Territory,351
+127,Southern Asia (excluding India),5397
+135,Caucasus and Central Asia,5408
+136,Cayman Islands,197
+162,Christmas Island,247
+166,Cocos Islands,263
+175,Mayotte,193
+223,Eastern Asia,467
+232,Eritrea,157
+234,Faeroe Islands,250
+238,Falkland Islands,249
+239,South Georgia and the South Sandwich Islands,352
+248,Aland Islands,61373
+254,French Guiana,253
+260,French Southern Territories,347
+292,Gibraltar,251
+304,Greenland,205
+312,Guadeloupe,252
+334,Heard Island and McDonald Islands,350
+336,Vatican,257
+408,North Korea,128
+474,Martinique,284
+485,Western Asia,472
+492,Monaco,214
+500,Montserrat,216
+514,More developed regions,452
+515,Developing regions,36372
+518,Eastern Asia (not including Japan),36357
+531,Curacao,279
+534,Sint Maarten (Dutch part),281
+535,Bonaire Sint Eustatius and Saba,348
+574,Norfolk Island,285
+581,United States Minor Outlying Islands,354
+612,Pitcairn,286
+630,Puerto Rico,93
+638,Reunion,245
+652,Saint Barthlemy,60094
+654,Saint Helena,260
+663,Saint Martin (French part),280
+666,Saint Pierre and Miquelon,353
+674,San Marino,231
+682,Saudi Arabia,90
+702,Singapore,86
+732,Western Sahara,248
+738,Sub-Saharan Africa,289
+740,Suriname,234
+744,Svalbard and Jan Mayen,298
+746,Northern Africa,464
+795,Turkmenistan,69
+796,Turks and Caicos Islands,236
+830,Channel Islands,304
+831,Guernsey,282
+832,Jersey,283
+850,United States Virgin Islands,256
+917,International Centers (FAO),73700
+919,Regional Centres (FAO),73699
+530,Netherlands Antilles,362
+891,Serbia and Montenegro,268
+736,Sudan,79
+97,European Union,318
+74,Bouvet Island,349
+369,Iraq,134
+370,Iraq (Kurdistan Region),73698
+827,England and Wales,278
+828,Northern Ireland,357
+829,Scotland,358
+918,European Union (EU) Institutions,35052
