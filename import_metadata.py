@@ -46,4 +46,4 @@ def extract_description(pdf_path):
 
     converted_text = ff.getvalue()
 
-    # XXX TODO: parse relevant fields from `converted_text`
+    return converted_text

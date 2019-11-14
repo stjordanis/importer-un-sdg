@@ -1,3 +1,4 @@
 pdfminer.six
 lxml
 mysql-connector-python
+requests
