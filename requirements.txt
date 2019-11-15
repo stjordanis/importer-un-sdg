@@ -1,4 +1,5 @@
 pdfminer.six
 lxml
-mysql-connector-python
 requests
+python-dotenv
+PyMySQL
