@@ -58,6 +58,10 @@ class DBUtils:
         self.cursor.execute(*args, **kwargs)
         return self.cursor.fetchall()
 
+    def insert_one(self, *args, **kwargs):
+        self.cursor.execute(*args, **kwargs)
+        return self.cursor.lastrowid
+
     def upsert_one(self, *args, **kwargs):
         self.cursor.execute(*args, **kwargs)
         if self.cursor.rowcount == 0: return UNMODIFIED
@@ -130,7 +134,7 @@ class DBUtils:
         """, [dataset_id, tag_id])
         # ON DUPLICATE here only avoids error, it intentionally updates nothing
 
-    def upsert_dataset(self, name, namespace, user_id, tag_id, description='This is a dataset imported by the automated fetcher'):
+    def upsert_dataset(self, name, namespace, user_id, tag_id=None, description='This is a dataset imported by the automated fetcher'):
         operation = self.upsert_one("""
             INSERT INTO datasets
                 (name, description, namespace, createdAt, createdByUserId, updatedAt, metadataEditedAt, metadataEditedByUserId, dataEditedAt, dataEditedByUserId)
@@ -218,8 +222,7 @@ class DBUtils:
 
         (var_id,) = self.fetch_one("""
             SELECT id FROM variables
-            WHERE name = %s
-            AND code = %s
+            WHERE (name = %s OR code = %s)
             AND datasetId = %s
             AND sourceId = %s
         """, [name, code, dataset_id, source_id])
