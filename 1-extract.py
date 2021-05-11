@@ -22,13 +22,14 @@ import functools
 import requests
 import json
 import math
+import os
 from datetime import datetime
 from tqdm import tqdm
 
 from import_metadata import extract_description #need to pip install pdfminer.six
 
 pd.options.display.max_columns = None
-pd.set_option('display.max_colwidth', -1)
+pd.set_option('display.max_colwidth', None)
 
 
 # ## Load the data
@@ -37,7 +38,7 @@ pd.set_option('display.max_colwidth', -1)
 
 # In[2]:
 
-
+# function to convert strings to floats
 def str_to_float(s):
     try:
         # Parse strings with thousands (,) separators
@@ -49,13 +50,11 @@ def str_to_float(s):
 # In[3]:
 
 
-original_df = pd.read_csv(
-    "data/20190903150325064_drifter4e@gmail.com_data.csv", 
-    converters={'Value': str_to_float},
-    low_memory=False
+original_df = pd.read_excel(
+    "data/20210510165844033_fiona@ourworldindata.org/Goal1.xlsx",
+    sheet_name = "data", 
+    converters={'Value': str_to_float}
 )
-
-
 # Remove entries for which no value exists.
 
 # In[4]:
