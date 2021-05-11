@@ -25,7 +25,7 @@ import math
 from datetime import datetime
 from tqdm import tqdm
 
-from import_metadata import extract_description
+from import_metadata import extract_description #need to pip install pdfminer.six
 
 pd.options.display.max_columns = None
 pd.set_option('display.max_colwidth', -1)
