@@ -22,7 +22,8 @@ import functools
 import requests
 import json
 import math
-import os
+import glob
+from pathlib import Path
 from datetime import datetime
 from tqdm import tqdm
 
@@ -49,17 +50,26 @@ def str_to_float(s):
 
 # In[3]:
 
-
-original_df = pd.read_excel(
-    "data/20210510165844033_fiona@ourworldindata.org/Goal1.xlsx",
-    sheet_name = "data", 
-    converters={'Value': str_to_float}
+## Original data from September 2019
+original_df = pd.read_csv(
+    "data/20190903150325064_drifter4e@gmail.com_data.csv", 
+    converters={'Value': str_to_float},
+    low_memory=False
 )
+# %%
+# Data from May 2021
+original_df = pd.DataFrame()
+for f in glob.glob("data/20210510165844033_fiona@ourworldindata.org/Goal*.xlsx"):
+    df = pd.read_excel(f,
+    sheet_name = "data", 
+    converters={'Value': str_to_float})
+    original_df = original_df.append(df,ignore_index=True)
+
 # Remove entries for which no value exists.
 
 # In[4]:
 
-
+## Removing null values from data
 original_df = original_df[original_df['Value'].notnull()]
 
 
@@ -84,7 +94,7 @@ original_df = original_df[original_df['Value'].notnull()]
 
 
 # A section of the dataset that contains Age and Sex dimension entities
-original_df[original_df['[Age]'].notnull() & original_df['[Sex]'].notnull()]
+original_df[original_df['Age'].notnull() & original_df['Sex'].notnull()]
 
 
 # ## Replace column codes with full names
@@ -129,8 +139,9 @@ codelists_by_column_name = {
 
 # In[9]:
 
-
-dimension_names = [c[1:-1] for c in original_df.columns if c[0] == '[' and c[-1] == ']']
+# This will need changing in 2021 update - no more square brackets in column names so don't need to remove them
+#dimension_names = [c[1:-1] for c in original_df.columns if c[0] == '[' and c[-1] == ']']
+dimension_names = original_df.columns[18:-1]
 
 
 # In[10]:
@@ -189,8 +200,8 @@ expanded_df = expand_codes(original_df, codelists_by_dimension_name, codelists_b
 
 # In[14]:
 
-
-expanded_df[['[Hazard type]']].drop_duplicates()
+#Nothing in here - check what it was in the 2019 data
+expanded_df[['Hazard type']].drop_duplicates()
 
 
 # In[15]:
@@ -206,13 +217,16 @@ expanded_df[['Units']].drop_duplicates()
 # In[16]:
 
 
-entities = expanded_df[['GeoAreaCode', 'GeoAreaName']]     .sort_values(by='GeoAreaCode')     .drop_duplicates()     .rename(columns={'GeoAreaCode': 'id', 'GeoAreaName': 'name'})
+entities = expanded_df[['GeoAreaName']].sort_values(by='GeoAreaName').drop_duplicates().rename(columns={'GeoAreaName': 'name'})
+
 
 
 # In[17]:
 
 
-entities.to_csv('./exported_data/entities.csv', index=False)
+Path("./output/").mkdir(parents=True, exist_ok=True)
+
+entities.to_csv('./output/distinct_countries_standardized.csv', index=False)
 
 
 # ## Export datasets and variables
@@ -228,7 +242,8 @@ entities.to_csv('./exported_data/entities.csv', index=False)
 # In[18]:
 
 
-DIMENSIONS = [c for c in expanded_df.columns if c[0] == '[' and c[-1] == ']']
+DIMENSIONS = comparison.loc[comparison["match"] == True, 'dimensions']
+#DIMENSIONS = [c for c in expanded_df.columns if c[0] == '[' and c[-1] == ']']
 NON_DIMENSIONS = [c for c in expanded_df.columns if c not in set(DIMENSIONS)]
 
 @functools.lru_cache(maxsize=256)
@@ -341,7 +356,7 @@ for i, row in tqdm(all_series.iterrows(), total=len(all_series)):
     
     sources = sources.append({
         'id': i,
-        'name': "%s (UN SDG, 2019)" % row['SeriesDescription'],
+        'name': "%s (UN SDG, 2021)" % row['SeriesDescription'],
         'description': json.dumps(source_description),
         'dataset_id': i
     }, ignore_index=True)
@@ -361,7 +376,7 @@ for i, row in tqdm(all_series.iterrows(), total=len(all_series)):
             'name': "%s - %s - %s" % (row['Indicator'], row['SeriesDescription'], row['SeriesCode'])
         }
         variables = variables.append(variable, ignore_index=True)
-        extract_datapoints(table).to_csv('./exported_data/%04d_datapoints.csv' % variable_idx, index=False)
+        extract_datapoints(table).to_csv('./output/datapoints_%d.csv' % variable_idx, index=False)
         variable_idx += 1
 
     else:
@@ -379,13 +394,13 @@ for i, row in tqdm(all_series.iterrows(), total=len(all_series)):
                 
             }
             variables = variables.append(variable, ignore_index=True)
-            extract_datapoints(table).to_csv('./exported_data/%04d_datapoints.csv' % variable_idx, index=False)
+            extract_datapoints(table).to_csv('./output/datapoints_%d.csv' % variable_idx, index=False)
             variable_idx += 1
 
 
-variables.to_csv('./exported_data/variables.csv', index=False)
-datasets.to_csv('./exported_data/datasets.csv', index=False)
-sources.to_csv('./exported_data/sources.csv', index=False)
+variables.to_csv('./output/variables.csv', index=False)
+datasets.to_csv('./output/datasets.csv', index=False)
+sources.to_csv('./output/sources.csv', index=False)
 
 
 # In[ ]:
