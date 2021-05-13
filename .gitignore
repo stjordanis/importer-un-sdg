@@ -75,7 +75,8 @@ venv.bak/
 # Exported data
 exported_data/
 
-# Hidden files
+# Hidden files 
 ~*
 .DS_Store
 .Rproj.user
+*.Rproj
