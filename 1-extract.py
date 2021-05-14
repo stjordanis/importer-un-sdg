@@ -50,14 +50,7 @@ def str_to_float(s):
 
 # In[3]:
 
-## Original data from September 2019
-original_df = pd.read_csv(
-    "data/20190903150325064_drifter4e@gmail.com_data.csv", 
-    converters={'Value': str_to_float},
-    low_memory=False
-)
-# %%
-# Data from May 2021
+# Data from May 2021 - each goal in separate xlsx
 original_df = pd.DataFrame()
 for f in glob.glob("data/20210510165844033_fiona@ourworldindata.org/Goal*.xlsx"):
     df = pd.read_excel(f,
@@ -217,16 +210,16 @@ expanded_df[['Units']].drop_duplicates()
 # In[16]:
 
 
-entities = expanded_df[['GeoAreaName']].sort_values(by='GeoAreaName').drop_duplicates().rename(columns={'GeoAreaName': 'name'})
+entities = expanded_df[['GeoAreaName']].sort_values(by='GeoAreaName').drop_duplicates().rename(columns={'GeoAreaName': 'Country'})
 
 
 
 # In[17]:
 
 
-Path("./output/").mkdir(parents=True, exist_ok=True)
+Path("./output/datapoints").mkdir(parents=True, exist_ok=True)
 
-entities.to_csv('./output/distinct_countries_standardized.csv', index=False)
+entities.to_csv('./output/entities.csv', index=False)
 
 
 # ## Export datasets and variables
@@ -355,10 +348,10 @@ for i, row in tqdm(all_series.iterrows(), total=len(all_series)):
         pass
     
     sources = sources.append({
-        'id': i,
+        'dataset_id': i,
         'name': "%s (UN SDG, 2021)" % row['SeriesDescription'],
         'description': json.dumps(source_description),
-        'dataset_id': i
+        'id': i
     }, ignore_index=True)
         
 
@@ -376,7 +369,7 @@ for i, row in tqdm(all_series.iterrows(), total=len(all_series)):
             'name': "%s - %s - %s" % (row['Indicator'], row['SeriesDescription'], row['SeriesCode'])
         }
         variables = variables.append(variable, ignore_index=True)
-        extract_datapoints(table).to_csv('./output/datapoints_%d.csv' % variable_idx, index=False)
+        extract_datapoints(table).to_csv('./output/datapoints/datapoints_%d.csv' % variable_idx, index=False)
         variable_idx += 1
 
     else:
@@ -394,7 +387,7 @@ for i, row in tqdm(all_series.iterrows(), total=len(all_series)):
                 
             }
             variables = variables.append(variable, ignore_index=True)
-            extract_datapoints(table).to_csv('./output/datapoints_%d.csv' % variable_idx, index=False)
+            extract_datapoints(table).to_csv('./output/datapoints/datapoints_%d.csv' % variable_idx, index=False)
             variable_idx += 1
 
 
@@ -405,6 +398,114 @@ sources.to_csv('./output/sources.csv', index=False)
 
 # In[ ]:
 
+datasets = pd.DataFrame(columns=['id', 'name'])
+variables = pd.DataFrame(columns=['id', 'name', 'original_metadata', 'unit', 'short_unit','description','code','coverage','timespan','display','dataset_id','source_id'])
+sources = pd.DataFrame(columns=['id', 'name', 'description', 'dataset_id'])
+
+source_description_template = {
+    'dataPublishedBy': "United Nations Statistics Division",
+    'dataPublisherSource': None,
+    'link': "https://unstats.un.org/sdgs/indicators/database/",
+    'retrievedDate': datetime.now().strftime("%d-%B-%y"),
+    'additionalInfo': None
+}
+
+variable_idx = 0
+
+def extract_datapoints(df):
+    return pd.DataFrame({
+        'entity': df['GeoAreaCode'],
+        'year': df['TimePeriod'],
+        'value': df['Value']
+    }).drop_duplicates(subset=['entity', 'year']).dropna()
+
+for i, row in tqdm(all_series.iterrows(), total=len(all_series)):
+    
+    # DATASET
+    
+    datasets = datasets.append(
+        {
+            'id': i, 
+            'name': row['SeriesDescription']
+        }, 
+        ignore_index=True)
+    
+
+    # SOURCE
+    
+    source_description = source_description_template.copy()
+    
+    try:
+        source_description['additionalInfo'] = extract_description('metadata/Metadata-%s.pdf' % '-'.join([part.rjust(2, '0') for part in row['Indicator'].split('.')]))
+    except:
+        pass
+    
+    sources = sources.append({
+        'dataset_id': i,
+        'name': "%s (UN SDG, 2021)" % row['SeriesDescription'],
+        'description': json.dumps(source_description),
+        'id': i
+    }, ignore_index=True)
+        
+
+    # VARIABLES & DATAPOINTS
+    
+    _, dimensions, dimension_members = get_series_with_relevant_dimensions(row['Indicator'], row['SeriesCode'])
+    
+    if len(dimensions) == 0:
+        # no additional dimensions
+        table = generate_tables_for_indicator_and_series(row['Indicator'], row['SeriesCode'])
+        variable = {
+            'id': variable_idx,
+            'name': "%s - %s - %s" % (row['Indicator'], row['SeriesDescription'], row['SeriesCode']),
+            'original_metadata': '',
+            'unit': row['Units'],
+            'short_unit': row['Units'], # not sure if short_unit is the same as unit in this case? 
+            'description': row['SeriesDescription'],
+            'code': "%s" % row['SeriesCode'],
+            'coverage': '',
+            'timespan': '',
+            'display': '',
+            'dataset_id': i,
+            'source_id': i,
+            
+        }
+        variables = variables.append(variable, ignore_index=True)
+        extract_datapoints(table).to_csv('./output/datapoints/datapoints_%d.csv' % variable_idx, index=False)
+        variable_idx += 1
+
+    else:
+        # has additional dimensions
+        for member_combination, table in generate_tables_for_indicator_and_series(row['Indicator'], row['SeriesCode']).items():
+            variable = {
+                'id': variable_idx,
+                'name': "%s - %s - %s - %s" % (
+                    row['Indicator'], 
+                    row['SeriesDescription'], 
+                    row['SeriesCode'],
+                    ' - '.join(map(str, member_combination))),
+            'original_metadata': '',
+            'unit': row['Units'],
+            'short_unit': row['Units'], # not sure if short_unit is the same as unit in this case? 
+            'description': row['SeriesDescription'],
+            'code': "%s" % row['SeriesCode'],
+            'coverage': '',
+            'timespan': '',
+            'display': '',
+            'dataset_id': i,
+            'source_id': i,
+            }
+            variables = variables.append(variable, ignore_index=True)
+            extract_datapoints(table).to_csv('./output/datapoints/datapoints_%d.csv' % variable_idx, index=False)
+            variable_idx += 1
+
+
+variables.to_csv('./output/variables.csv', index=False)
+datasets.to_csv('./output/datasets.csv', index=False)
+sources.to_csv('./output/sources.csv', index=False)
 
 
 
+
+
+# %%
