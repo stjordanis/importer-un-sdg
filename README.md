@@ -1,11 +1,11 @@
 # UN SDG scripts (archived)
 
-This repository contains a set of historical scripts for processing and storing
-the datasets from the [UN Sustainable Development Goals](https://unstats.un.org/sdgs/indicators/database) database.
+_Historical scripts for processing and storing the datasets from the [UN Sustainable Development Goals](https://unstats.un.org/sdgs/indicators/database) database._
 
-Current and future work takes place in the [owid/importers](https://github.com/owid/importers) repo instead.
+Superceded by: [owid/importers](https://github.com/owid/importers)
 
-## [`1-extract.ipynb`](./1-extract.ipynb)
+
+### [`1-extract.ipynb`](./1-extract.ipynb)
 
 This script accepts a CSV file exported from the online tool provided by the UN, and produces a set of CSVs to be later processed by a separate script.
 
@@ -15,6 +15,6 @@ This script accepts a CSV file exported from the online tool provided by the UN,
   - `sources.csv`: records to be inserted into the `sources` table in `grapher`.
   - `*_datapoints.csv*`: records to be inserted into the `data_values` table in `grapher`.
 
-## [`2-import.ipynb`](./2-import.ipynb)
+### [`2-import.ipynb`](./2-import.ipynb)
 
 This script reads the CSVs referenced before, and imports their contents as records in the relevant tables in the `grapher` database.
