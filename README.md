@@ -1,7 +1,9 @@
-# UN SDG scripts
+# UN SDG scripts (archived)
 
-This repository contains a set of scripts for processing and storing
+This repository contains a set of historical scripts for processing and storing
 the datasets from the [UN Sustainable Development Goals](https://unstats.un.org/sdgs/indicators/database) database.
+
+Current and future work takes place in the [owid/importers](https://github.com/owid/importers) repo instead.
 
 ## [`1-extract.ipynb`](./1-extract.ipynb)
 
